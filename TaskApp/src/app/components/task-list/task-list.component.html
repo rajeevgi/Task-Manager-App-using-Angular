@@ -1,0 +1,15 @@
+<app-task-form (taskAdded)="onTaskAdded()"></app-task-form>
+
+<div *ngIf="tasks.length > 0; else noTasks">
+  <div *ngFor="let task of tasks" class="task-item">
+    <span [ngClass]="{ 'completed': task.completed }">{{ task.title }}</span>
+    <button *ngIf="task.id !== undefined" (click)="deleteTask(task.id)" class="delete-btn">
+      Delete
+    </button>
+  </div>
+</div>
+
+<!-- Show this when no tasks are available -->
+<ng-template #noTasks>
+  <p class="no-tasks">No tasks available. Add a new task!</p>
+</ng-template>
