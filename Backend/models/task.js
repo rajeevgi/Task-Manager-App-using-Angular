@@ -1,12 +1,16 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
 
-const Task = sequelize.define('Task', {
-    id : { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
-    title : { type: DataTypes.STRING, allowNull : false },
-    completed : { type: DataTypes.BOOLEAN, defaultValue: false},
-}, {
-    timestamps : false,
-});
+const Task = sequelize.define(
+  "Task",
+  {
+    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    title: { type: DataTypes.STRING, allowNull: false },
+    completed: { type: DataTypes.BOOLEAN, defaultValue: false },
+  },
+  {
+    timestamps: false,
+  }
+);
 
 module.exports = Task;

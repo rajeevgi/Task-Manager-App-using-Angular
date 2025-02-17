@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { CommonModule } from '@angular/common';
-import { TaskFormComponent } from "../task-form/task-form.component";
 
 interface Task {
-  id ?: number;
+  id : number;
   title : string;
   completed : boolean;
 }
 
 @Component({
   selector: 'app-task-list',
-  imports: [CommonModule, TaskFormComponent],
+  imports: [CommonModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
@@ -26,11 +25,24 @@ export class TaskListComponent implements OnInit {
   }
 
   fetchTasks(): void {
-    this.taskService.getTasks().subscribe(tasks => this.tasks = tasks)
+    this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks });
   }
 
   onTaskAdded():void {
     this.fetchTasks();
+  }
+
+  onUpdate(id : number){
+    const taskToUpdate = this.tasks.find(task => task.id === id);
+
+    if(!taskToUpdate) return ;
+
+    const updatedTask = {...taskToUpdate, completed : !taskToUpdate.completed};
+
+    this.taskService.updateTask(id, updatedTask).subscribe(updated => {
+      this.tasks = this.tasks.map(task => (task.id === id ?  updated : task ));
+      alert("Task Updated Successfully....");
+    });
   }
 
   deleteTask(id : number): void {

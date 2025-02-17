@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 interface Task {
-  id ?: number;
+  id : number;
   title : string;
   completed : boolean;
 }

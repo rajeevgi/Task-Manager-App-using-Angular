@@ -1,15 +1,41 @@
-<app-task-form (taskAdded)="onTaskAdded()"></app-task-form>
-
-<div *ngIf="tasks.length > 0; else noTasks">
-  <div *ngFor="let task of tasks" class="task-item">
-    <span [ngClass]="{ 'completed': task.completed }">{{ task.title }}</span>
-    <button *ngIf="task.id !== undefined" (click)="deleteTask(task.id)" class="delete-btn">
-      Delete
-    </button>
-  </div>
+<div class="row bg-secondary text-white text-center rounded p-3">
+  <h3>List Of Task</h3>
 </div>
 
-<!-- Show this when no tasks are available -->
-<ng-template #noTasks>
-  <p class="no-tasks">No tasks available. Add a new task!</p>
-</ng-template>
+<div class="row mt-3">
+  <!-- Show when no tasks are available -->
+  <div *ngIf="tasks.length === 0" class="alert alert-info text-center">
+    No tasks available. Add a new task!
+  </div>
+
+  <!-- Task Table -->
+  <div *ngIf="tasks.length > 0">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>Task Id</th>
+          <th>Task Name</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks" class="text-center">
+          <td>{{ task.id }}</td>
+          <td [ngClass]="{ 'text-success': task.completed, 'text-danger': !task.completed }">
+            {{ task.title }}
+          </td>
+          <td>
+            <span class="badge" [ngClass]="{ 'bg-success': task.completed, 'bg-warning': !task.completed }">
+              {{ task.completed ? 'Completed' : 'Pending' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-warning mx-2" (click)="onUpdate(task.id)">Update</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteTask(task.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
